@@ -93,16 +93,17 @@ const habitSlice = createSlice({
     },
     extraReducers: (builder) => {
         // while fetching is taking place
-        builder.addCase(fetchHabits.pending, (state)=>{
-            state.isLoading = true
+        builder
+        .addCase(fetchHabits.pending, (state)=>{
+            state.isLoading = true;
         })
         // fetching is complete
-        builder.addCase(fetchHabits.fulfilled,(state,action)=>{
+        .addCase(fetchHabits.fulfilled,(state,action)=>{
             state.isLoading = false;
             state.habits = action.payload;
         })
         // fetching failed
-        builder.addCase(fetchHabits.rejected,(state,action)=>{
+        .addCase(fetchHabits.rejected,(state,action)=>{
             state.isLoading = false;
             state.error = action.error.message || "failed to fetch habits";
         })

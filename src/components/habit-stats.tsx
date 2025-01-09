@@ -1,15 +1,15 @@
 import { useSelector, useDispatch } from "react-redux"; 
 import { fetchHabits, Habit } from "../store/habit-slice";
 import { AppDispatch, RootState } from "../store/store";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { LinearProgress, Paper, Typography } from "@mui/material";
 
-function HabitStats() {
+const HabitStats: React.FC = () => {
     const {habits,isLoading,error} = useSelector((state: RootState)=>state.habits)//{habits} destructure
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(()=>{
-        dispatch(fetchHabits);
+        dispatch(fetchHabits());
     },[])
 
     if(isLoading){
@@ -22,9 +22,8 @@ function HabitStats() {
     const getCompletedToday = () => {
         const today = new Date().toISOString().split("T")[0];
 
-        return habits.filter((habit)=>{
-            habit.completedDates.includes(today);
-        }).length
+        return habits.filter((habit)=>
+            habit.completedDates.includes(today)).length;
     }
 
     const getStreak = (habit: Habit) => {
